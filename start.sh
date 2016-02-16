@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-PG_MAJOR=9.1
+PG_MAJOR=9.5
 POSTGRESQL_DATA=/var/lib/postgresql/$PG_MAJOR/main
 POSTGRESQL_CONF=/etc/postgresql/$PG_MAJOR/main
 
@@ -15,7 +15,7 @@ if [ ! -d $POSTGRESQL_DATA ]; then
     chown -R postgres:postgres $POSTGRESQL_DATA
     pg_createcluster --start -e UTF-8 $PG_MAJOR main
 
-    sudo -u postgres  /usr/bin/psql --command "CREATE USER admin  WITH SUPERUSER PASSWORD 'xxxxx';"  
+    sudo -u postgres  /usr/bin/psql --command "CREATE USER admin  WITH SUPERUSER PASSWORD 'boutpgmin';"  
     sudo -u postgres  /usr/bin/psql --command "CREATE ROLE  xtrole NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;"  
     echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$PG_MAJOR/main/pg_hba.conf
     echo "listen_addresses='*'" >> /etc/postgresql/$PG_MAJOR/main/postgresql.conf
@@ -26,7 +26,7 @@ fi
 
 appStart () {
     [ -f /etc/postgresql/.alreadysetup ] && echo "Skipping setup..." || appSetup
-
+    mkdir -p /var/run/postgresql/9.5-main.pg_stat_tmp && chown -R postgres  /var/run/postgresql/9.5-main.pg_stat_tmp  
     sudo -u  postgres /usr/lib/postgresql/$PG_MAJOR/bin/postgres  --config_file=/etc/postgresql/$PG_MAJOR/main/postgresql.conf
 }
 

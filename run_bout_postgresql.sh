@@ -3,10 +3,10 @@
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 VOLUME_BASE=/data/postgresql
-S_HOST=F18-DB
+S_HOST=F18-DB95
 S_DEV=wlan0
 S_DOMAIN=bring.out.ba
-S_HOST_IP=192.168.46.21
+S_HOST_IP=192.168.46.22
 S_DNS_HOST_IP=192.168.46.254
 
 
@@ -25,7 +25,7 @@ docker run -d \
      --name $S_HOST.$S_DOMAIN \
      --hostname $S_HOST.$S_DOMAIN  \
      --dns $S_DNS_HOST_IP \
-     bout-postgresql
+     bout-postgresql-95
 
 
 

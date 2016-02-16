@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 MAINTAINER Jasmin Beganović <bjasko@bring.out.ba>
-ENV PG_MAJOR 9.1
+ENV PG_MAJOR 9.5
 
 # pre-instalation requirements  
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
@@ -19,7 +19,7 @@ RUN echo "Europe/Sarajevo" > /etc/timezone && dpkg-reconfigure -f noninteractive
 
 # apt-get psql + utils 
 RUN apt-get update && apt-get -y -q install python-software-properties software-properties-common curl
-RUN apt-get -y -q install postgresql-9.1 postgresql-client-9.1 postgresql-contrib-9.1
+RUN apt-get -y -q install postgresql-9.5 postgresql-client-9.5 postgresql-contrib-9.5
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
 
