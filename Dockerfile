@@ -26,5 +26,13 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 ADD start.sh /start.sh
 RUN chmod +x /start.sh
 
+ADD pg_backup.sh /pg_backup.sh
+RUN chmod +x /pg_backup.sh
+
+# add backup cronjobs
+RUN crontab -l | { cat; echo "30 5 * * * /pg_backup.sh curr"; } | crontab -
+RUN crontab -l | { cat; echo "0 0 11 * * /pg_backup.sh server"; } | crontab -
+RUN crontab -l | { cat; echo "30 03 01 Jan,Feb,Mar,Apr * /pg_backup.sh all"; } | crontab -
+
 ENTRYPOINT ["/start.sh"]
 CMD ["app:start"]

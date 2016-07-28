@@ -19,6 +19,7 @@ if [ ! -d $POSTGRESQL_DATA ]; then
     sudo -u postgres  /usr/bin/psql --command "CREATE ROLE  xtrole NOSUPERUSER INHERIT NOCREATEDB NOCREATEROLE NOREPLICATION;"  
     echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$PG_MAJOR/main/pg_hba.conf
     echo "listen_addresses='*'" >> /etc/postgresql/$PG_MAJOR/main/postgresql.conf
+    sed -i -e 's/ssl = true/ssl = false/g' /etc/postgresql/$PG_MAJOR/main/postgresql.conf
 
     mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
 fi
