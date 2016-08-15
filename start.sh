@@ -20,15 +20,17 @@ if [ ! -d $POSTGRESQL_DATA ]; then
     echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$PG_MAJOR/main/pg_hba.conf
     echo "listen_addresses='*'" >> /etc/postgresql/$PG_MAJOR/main/postgresql.conf
     sed -i -e 's/ssl = true/ssl = false/g' /etc/postgresql/$PG_MAJOR/main/postgresql.conf
-
     mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
 fi
 }
 
 appStart () {
     [ -f /etc/postgresql/.alreadysetup ] && echo "Skipping setup..." || appSetup
-    mkdir -p /var/run/postgresql/9.5-main.pg_stat_tmp && chown -R postgres  /var/run/postgresql/9.5-main.pg_stat_tmp  
+    mkdir -p /var/run/postgresql/9.5-main.pg_stat_tmp && chown -R postgres  /var/run/postgresql/9.5-main.pg_stat_tmp
+    /usr/sbin/rsyslogd
+    touch /var/log/cron.log && /usr/sbin/cron -f &    
     sudo -u  postgres /usr/lib/postgresql/$PG_MAJOR/bin/postgres  --config_file=/etc/postgresql/$PG_MAJOR/main/postgresql.conf
+    
 }
 
 appHelp () {

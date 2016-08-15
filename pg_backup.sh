@@ -4,7 +4,8 @@ BCKP_DIR=/backup/postgresql
 PGHOST=localhost
 B_CURR_Y=`date "+%Y"`
 DATE=`date +%Y_%m_%d`
-
+PGUSER=admin
+PGPASSWORD=boutpgmin
 
 # DB list all
 db_list () {

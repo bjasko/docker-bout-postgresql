@@ -1,0 +1,6 @@
+PGUSER=admin
+PGPASSWORD=boutpgmin
+42 23 * * * bash /pg_backup.sh curr >> /var/log/cron.log 2>&1
+0 0 11 * * bash /pg_backup.sh server >> /var/log/cron.log 2>&1
+30 03 01 Jan,Feb,Mar,Apr * bash /pg_backup.sh all >> /var/log/cron.log 2>&1
+
