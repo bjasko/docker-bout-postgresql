@@ -9,19 +9,19 @@ PGPASSWORD=boutpgmin
 
 # DB list all
 db_list () {
-  DB=$(psql -lt -h $PGHOST | egrep -v 'template[01]' | egrep -v 'postgres' | grep _  | egrep -v 'test' | awk '{print $1}')
+  DB=$(psql -lt -h $PGHOST  -U $PGUSER | egrep -v 'template[01]' | egrep -v 'postgres' | grep _  | egrep -v 'test' | awk '{print $1}')
 }
 
 # DB list all
 db_list_curr () {
-  DBC=$(psql -lt -h $PGHOST | egrep -v 'template[01]' | egrep -v 'postgres' | grep _ | egrep -v 'test' | grep $B_CURR_Y | awk '{print $1}')
+  DBC=$(psql -lt -h $PGHOST -U $PGUSER | egrep -v 'template[01]' | egrep -v 'postgres' | grep _ | egrep -v 'test' | grep $B_CURR_Y | awk '{print $1}')
 }
 
 backup_curr () {
   for d in $DBC
            do
            cd $BCKP_DIR/$DATE
-           pg_dump -Fc -h $PGHOST $d  > $d.backup
+           pg_dump -Fc -h $PGHOST -U $PGUSER $d  > $d.backup
            done
 }
 
@@ -29,13 +29,13 @@ backup_all () {
   for d in $DB
            do
            cd $BCKP_DIR/$DATE
-           pg_dump -Fc -h $PGHOST $d  > $d.backup
+           pg_dump -Fc -h $PGHOST -U $PGUSER $d  > $d.backup
            done
 }
 
 backup_server (){
   cd $BCKP_DIR/$DATE
-  pg_dumpall -h $PGHOST | gzip -c > server.all.sql.gz
+  pg_dumpall -h $PGHOST -U $PGUSER | gzip -c > server.all.sql.gz
 }
 
 vacuum () {

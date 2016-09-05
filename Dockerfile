@@ -18,7 +18,7 @@ RUN apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
 RUN echo "Europe/Sarajevo" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
 # apt-get psql + utils 
-RUN apt-get update && apt-get -y -q install python-software-properties software-properties-common curl
+RUN apt-get update && apt-get -y -q install python-software-properties software-properties-common curl git
 RUN apt-get -y -q install postgresql-9.5 postgresql-client-9.5 postgresql-contrib-9.5
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/
 
@@ -35,6 +35,11 @@ ADD crontab /crontab
 RUN chmod 0644 /crontab
 RUN crontab /crontab
 RUN touch /var/log/cron.log
+# migrate
+ADD migrate /migrate
+ADD migrate_all.sh /migrate_all.sh
+RUN chmod +x /migrate_all.sh
+RUN chmod +x /migrate
 
 
 ENTRYPOINT ["/start.sh"]
