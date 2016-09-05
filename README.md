@@ -10,9 +10,14 @@ Za reinicijalizaciju pobrišemo $VOLUME_BASE/$S_HOST.$S_DOMAIN/etc/postgresql/.a
 
 ## Build 
 
-docker build -t bout-postgresql .
+docker build -t bjasko/f18-postgresql:latest  .
+
 
 ## RUN 
 Podesimo IP, DNS, domenu itd 
 
 ./run_bout_postgresql.sh
+
+## update baze
+
+docker exec -it CT_NAME  /migrate_all.sh
