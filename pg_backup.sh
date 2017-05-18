@@ -52,11 +52,11 @@ fi
 if [ "$1" == curr ];then
     db_list_curr
     backup_curr
-    vacuum
+#    vacuum
 elif [ "$1" == all ];then
     db_list
     backup_all
-    vacuum
+#    vacuum
 elif  [ "$1" == server ];then
     backup_server
 fi
